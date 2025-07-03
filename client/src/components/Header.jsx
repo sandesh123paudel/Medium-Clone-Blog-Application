@@ -40,7 +40,8 @@ const Header = () => {
             </Link>
             <Link
               to="/login"
-              className="text-gray-600 hover:text-gray-900 text-sm font-normal transition-colors duration-200"
+              className={`text-gray-600 hover:text-gray-900 text-sm font-normal transition-colors duration-200
+              }`}
             >
               Sign in
             </Link>

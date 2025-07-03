@@ -10,6 +10,7 @@ module.exports = {
         // Example for variable fonts, might be 'sohne-var'
         // sohne: ['"sohne-var"', 'sans-serif'],
       },
+     
     },
   },
   plugins: [],

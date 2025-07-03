@@ -11,6 +11,7 @@ import Footer from "./components/Footer";
 const App = () => {
   return (
     <>
+  
       <Header />
       <main className="max-w-4xl mx-auto p-4">
         <Routes>
