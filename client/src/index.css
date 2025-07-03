@@ -6,5 +6,6 @@
   body {
     /* This will apply font-poppins to the body and inherit down */
     @apply font-poppins;
+    background-color: #F7F4ED;
   }
 }
