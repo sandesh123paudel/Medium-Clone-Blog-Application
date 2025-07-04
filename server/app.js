@@ -3,6 +3,7 @@ require("dotenv").config(); // 👈 load env firstn
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const authRouter = require("./routes/authRouter");
 
 const app = express();
 
@@ -14,6 +15,9 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.send("API is working");
 });
+
+//Routes
+app.use("/api/auth/", authRouter);
 
 mongoose
   .connect(process.env.MONGO_URI)
