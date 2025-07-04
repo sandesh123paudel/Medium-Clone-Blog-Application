@@ -7,21 +7,23 @@ import Write from "./pages/Write";
 import Post from "./pages/Post";
 import { Route, Routes } from "react-router-dom";
 import Footer from "./components/Footer";
+import Stories from "./pages/Story";
+import Membership from "./pages/Membership";
 
 const App = () => {
   return (
     <>
-  
       <Header />
-      <main className="max-w-4xl mx-auto p-4">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/post/:id" element={<Post />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/write" element={<Write />} />
-        </Routes>
-      </main>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/story" element={<Stories />} />
+        <Route path="/membership" element={<Membership />} />
+        <Route path="/post/:id" element={<Post />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/write" element={<Write />} />
+      </Routes>
+
       <Footer />
     </>
   );

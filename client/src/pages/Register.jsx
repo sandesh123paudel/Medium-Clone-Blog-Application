@@ -1,114 +1,103 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import Button from "../components/ui/Button";
+import InputField from "../components/ui/InputField";
 
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [message, setMessage] = useState(""); // Retained for local UI feedback
 
-  const handleSubmit = (e) => {
+  const handleRegister = (e) => {
     e.preventDefault();
-    // Handle signup logic here
+    // Placeholder for registration logic (no Firebase)
+    console.log("Attempting to register with:", { name, email, password });
+    setMessage("Registration attempt: (No backend connected)");
+    // In a real app, you would call an API here
   };
 
   return (
     <div className="pt-20 flex items-center justify-center px-4 py-12 bg-[#F7F4ED]">
-      <div className="max-w-md w-full space-y-8 bg-[#F7F4ED] p-8 border-none shadow-none">
-        {/* Logo and Title */}
+      <div className="max-w-md w-full space-y-8 bg-[#F7F4ED] p-8 border-none shadow-none rounded-xl">
         <div className="text-center">
           <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
             Create your account
           </h2>
-          <p className="mt-2 text-sm text-gray-600">
-            Sign up to get started
-          </p>
+          <p className="mt-2 text-sm text-gray-600">Sign up to get started</p>
         </div>
 
-        {/* Signup Form */}
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+        <form className="mt-8 space-y-6" onSubmit={handleRegister}>
           <div className="space-y-4">
-            <div>
-              <label htmlFor="name" className="sr-only">
-                Full Name
-              </label>
-              <input
-                id="name"
-                name="name"
-                type="text"
-                required
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="appearance-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-black focus:z-10 sm:text-sm"
-                placeholder="Full Name"
-              />
-            </div>
-            <div>
-              <label htmlFor="email" className="sr-only">
-                Email address
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="appearance-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-black focus:z-10 sm:text-sm"
-                placeholder="Email address"
-              />
-            </div>
-            <div>
-              <label htmlFor="password" className="sr-only">
-                Password
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="appearance-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-black focus:z-10 sm:text-sm"
-                placeholder="Password"
-              />
-            </div>
+            <InputField
+              id="name"
+              name="name"
+              type="text"
+              placeholder="Full Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+              label="Full Name"
+            />
+            <InputField
+              id="email"
+              name="email"
+              type="email"
+              placeholder="Email address"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              label="Email address"
+            />
+            <InputField
+              id="password"
+              name="password"
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              label="Password"
+            />
           </div>
 
           <div className="space-y-4">
-            <button
-              type="submit"
-              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-black hover:bg-[#00000069] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black transition-colors duration-200"
-            >
+            <Button type="submit" className="text-white hover:text-black">
               Sign up
-            </button>
-
-            <button
+            </Button>
+            <Button
               type="button"
-              className="w-full flex items-center justify-center px-4 py-3 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 hover:text-white bg-white hover:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black transition-colors duration-200"
+              className="bg-white hover:bg-black text-gray-700 hover:text-white border-gray-300"
             >
               <img
                 className="h-5 w-5 mr-2"
-                src="/google.png"
+                src="google.png" // Placeholder for Google logo
                 alt="Google logo"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src =
+                    "https://placehold.co/20x20/cccccc/000000?text=G";
+                }} // Fallback
               />
               Sign up with Google
-            </button>
+            </Button>
           </div>
         </form>
 
-        {/* Login Link */}
+        {message && (
+          <div className="mt-4 p-3 rounded-lg text-center bg-blue-100 text-blue-700">
+            {message}
+          </div>
+        )}
+
         <p className="mt-4 text-center text-sm text-gray-600">
           Already have an account?{" "}
-          <Link
-            to="/login"
-            className="font-medium text-black hover:text-black"
-          >
+          <a href="/login" className="font-medium text-black hover:text-black">
             Sign in here
-          </Link>
+          </a>
         </p>
       </div>
     </div>
   );
 };
-
 export default Register;

@@ -9,6 +9,25 @@ const Header = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const navItems = [
+    {
+      title: "Our Story",
+      url: "/story",
+    },
+    {
+      title: "Membership",
+      url: "/membership",
+    },
+    {
+      title: "Write",
+      url: "/write",
+    },
+    {
+      title: "Sign in",
+      url: "/login",
+    },
+  ];
+
   return (
     <header className="fixed top-0 left-0 w-full border-b border-black z-50 bg-[#F7F4ED] ">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -20,31 +39,16 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <Link
-              to="/our-story"
-              className="text-gray-600 hover:text-gray-900 text-sm font-normal transition-colors duration-200"
-            >
-              Our story
-            </Link>
-            <Link
-              to="/membership"
-              className="text-gray-600 hover:text-gray-900 text-sm font-normal transition-colors duration-200"
-            >
-              Membership
-            </Link>
-            <Link
-              to="/write"
-              className="text-gray-600 hover:text-gray-900 text-sm font-normal transition-colors duration-200"
-            >
-              Write
-            </Link>
-            <Link
-              to="/login"
-              className={`text-gray-600 hover:text-gray-900 text-sm font-normal transition-colors duration-200
-              }`}
-            >
-              Sign in
-            </Link>
+            {navItems.map((item, index) => (
+              <Link
+                key={index}
+                to={item.url}
+                className="text-gray-600 hover:text-gray-900 text-sm font-normal transition-colors duration-200"
+              >
+                {item.title}
+              </Link>
+            ))}
+
             <Link
               to="/register"
               className="bg-black text-white px-4 py-2 rounded-full text-sm font-normal hover:bg-gray-800 transition-colors duration-200"
@@ -87,34 +91,16 @@ const Header = () => {
         {isMenuOpen && (
           <div className="md:hidden border-t border-gray-200 ">
             <nav className="px-2 pt-2 pb-3 space-y-1">
-              <Link
-                to="/our-story"
-                className="block px-3 py-2 text-gray-600 hover:text-gray-900 text-sm font-normal transition-colors duration-200"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Our story
-              </Link>
-              <Link
-                to="/membership"
-                className="block px-3 py-2 text-gray-600 hover:text-gray-900 text-sm font-normal transition-colors duration-200"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Membership
-              </Link>
-              <Link
-                to="/write"
-                className="block px-3 py-2 text-gray-600 hover:text-gray-900 text-sm font-normal transition-colors duration-200"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Write
-              </Link>
-              <Link
-                to="/login"
-                className="block px-3 py-2 text-gray-600 hover:text-gray-900 text-sm font-normal transition-colors duration-200"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Sign in
-              </Link>
+              {navItems.map((item, index) => (
+                <Link
+                  key={index}
+                  to={item.url}
+                  className="block px-3 py-2 text-gray-600 hover:text-gray-900 text-sm font-normal transition-colors duration-200"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.title}
+                </Link>
+              ))}
               <Link
                 to="/register"
                 className="block mx-3 mt-2 bg-black text-white px-4 py-2 rounded-full text-sm font-normal hover:bg-gray-800 transition-colors duration-200 text-center"
