@@ -5,9 +5,12 @@ import InputField from "../components/ui/InputField";
 import DocumentTitle from "../services/DocumentTitle";
 import { loginUser } from "../services/api/auth";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
+
   DocumentTitle("Login: Medium");
   const [formData, setFormData] = useState({
     email: "",
@@ -32,15 +35,13 @@ const Login = () => {
 
     try {
       const response = await loginUser(formData);
-      console.log("Login successful:", response);
-
-      //session storage
-      sessionStorage.setItem("user", JSON.stringify(response.user));
 
       setSuccess("Login successful. Redirecting to home page...");
       setTimeout(() => {
+        login(response.user, response.token);
+
         navigate("/"); // Navigate to your home page route
-      }, 1500); // Wa
+      }, 1500);
     } catch (error) {
       setError(error.message);
     } finally {

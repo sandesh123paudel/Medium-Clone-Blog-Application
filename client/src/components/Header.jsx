@@ -1,10 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef();
   const buttonRef = useRef();
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -30,12 +32,35 @@ const Header = () => {
     };
   }, [isMenuOpen]);
 
-  const navItems = [
+  const { user, isLoggedIn, logout } = useAuth();
+
+  // Handle logout
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
+
+  // Navigation items for non-logged in users
+  const publicNavItems = [
     { title: "Our Story", url: "/story" },
     { title: "Membership", url: "/membership" },
     { title: "Write", url: "/write" },
     { title: "Sign in", url: "/login" },
   ];
+
+  // Navigation items for logged in users
+  const privateNavItems = [
+    { title: "Write", url: "/write" },
+    { title: "Stories", url: "/stories" },
+    { title: "Library", url: "/library" },
+  ];
+
+  const navItems = isLoggedIn ? privateNavItems : publicNavItems;
+
+  //check if user is logged in
+  useEffect(() => {
+    console.log(user, isLoggedIn);
+  }, [user, isLoggedIn]);
 
   return (
     <header className="fixed top-0 left-0 w-full border-b border-black z-50 bg-[#F7F4ED]">
@@ -58,12 +83,26 @@ const Header = () => {
               </Link>
             ))}
 
-            <Link
-              to="/register"
-              className="bg-black text-white px-4 py-2 rounded-full text-sm font-normal hover:bg-gray-800 transition-colors duration-200"
-            >
-              Get started
-            </Link>
+            {isLoggedIn ? (
+              <div className="flex items-center space-x-4">
+                <span className="text-sm text-gray-600">
+                  Hello, {user?.name || "User"}
+                </span>
+                <button
+                  onClick={handleLogout}
+                  className="bg-red-600 text-white px-4 py-2 rounded-full text-sm font-normal hover:bg-red-700 transition-colors duration-200"
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <Link
+                to="/register"
+                className="bg-black text-white px-4 py-2 rounded-full text-sm font-normal hover:bg-gray-800 transition-colors duration-200"
+              >
+                Get started
+              </Link>
+            )}
           </nav>
 
           {/* Mobile menu button */}
@@ -118,13 +157,31 @@ const Header = () => {
                   {item.title}
                 </Link>
               ))}
-              <Link
-                to="/register"
-                className="block mx-3 mt-2 bg-black text-white px-4 py-2 rounded-full text-sm font-normal hover:bg-gray-800 transition-colors duration-200 text-center"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Get started
-              </Link>
+
+              {isLoggedIn ? (
+                <div className="px-3 py-2 space-y-2">
+                  <div className="text-sm text-gray-600">
+                    Hello, {user?.name || "User"}
+                  </div>
+                  <button
+                    onClick={() => {
+                      handleLogout();
+                      setIsMenuOpen(false);
+                    }}
+                    className="block w-full bg-red-600 text-white px-4 py-2 rounded-full text-sm font-normal hover:bg-red-700 transition-colors duration-200 text-center"
+                  >
+                    Logout
+                  </button>
+                </div>
+              ) : (
+                <Link
+                  to="/register"
+                  className="block mx-3 mt-2 bg-black text-white px-4 py-2 rounded-full text-sm font-normal hover:bg-gray-800 transition-colors duration-200 text-center"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Get started
+                </Link>
+              )}
             </nav>
           </div>
         )}

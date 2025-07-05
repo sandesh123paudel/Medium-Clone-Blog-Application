@@ -8,9 +8,13 @@ export const registerUser = async (userData) => {
       body: JSON.stringify(userData),
     });
 
-    //If registration is successful, store the token
+    //If registration is successful, store the token and user data
     if (response.token) {
       setAuthToken(response.token);
+      // Store user data in localStorage
+      if (response.user) {
+        localStorage.setItem("user", JSON.stringify(response.user));
+      }
     }
     return response;
   } catch (error) {
@@ -28,14 +32,19 @@ export const loginUser = async (credentials) => {
 
     if (response.token) {
       setAuthToken(response.token);
+      // Store user data in localStorage
+      if (response.user) {
+        localStorage.setItem("user", JSON.stringify(response.user));
+      }
     }
     return response;
   } catch (error) {
-    throw new Error(error.message || "Registration failed");
+    throw new Error(error.message || "Login failed");
   }
 };
 
-//Logout Function
+// Logout function
 export const logoutUser = () => {
   setAuthToken(null);
+  localStorage.removeItem("user");
 };

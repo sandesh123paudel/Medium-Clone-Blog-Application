@@ -1,16 +1,16 @@
 const API_BASE_URL = "http://localhost:5000/api";
 
 //Helper Function to make API calls
-
 export const apiCall = async (endpoint, options = {}) => {
   const url = `${API_BASE_URL}${endpoint}`;
 
-  // console.log("Making API call to:", url);
-  // console.log("With options:", options);
+  // Get token from localStorage instead of sessionStorage
+  const token = getAuthToken();
 
   const config = {
     headers: {
       "Content-Type": "application/json",
+      ...(token && { Authorization: `Bearer ${token}` }),
       ...options.headers,
     },
     ...options,
@@ -23,18 +23,16 @@ export const apiCall = async (endpoint, options = {}) => {
     if (!response.ok) {
       throw new Error(data.message || "Something went wrong");
     }
-    console.log(data);
     return data;
   } catch (error) {
-    throw new Error(error.message || "Network  error");
+    throw new Error(error.message || "Network error");
   }
 };
 
 //Function to set authorization token
-
 export const setAuthToken = (token) => {
   if (token) {
-    //store
+    //store in localStorage for persistence across tabs
     localStorage.setItem("token", token);
   } else {
     //remove
