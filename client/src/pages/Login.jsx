@@ -2,19 +2,10 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "../components/ui/Button";
 import InputField from "../components/ui/InputField";
+import DocumentTitle from "../../services/DocumentTitle";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [message, setMessage] = useState(""); // Retained for local UI feedback
-
-  const handleLogin = (e) => {
-    e.preventDefault();
-    // Placeholder for login logic (no Firebase)
-    console.log("Attempting to log in with:", { email, password });
-    setMessage("Login attempt: (No backend connected)");
-    // In a real app, you would call an API here
-  };
+  DocumentTitle("Login: Medium");
 
   return (
     <div className="pt-20 flex items-center justify-center px-4 py-12 bg-[#F7F4ED]">
@@ -28,15 +19,14 @@ const Login = () => {
           </p>
         </div>
 
-        <form className="mt-8 space-y-6" onSubmit={handleLogin}>
+        <form className="mt-8 space-y-6">
           <div className="space-y-4">
             <InputField
               id="email"
               name="email"
               type="email"
               placeholder="Email address"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+            
               required
               label="Email address"
             />
@@ -45,8 +35,7 @@ const Login = () => {
               name="password"
               type="password"
               placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              
               required
               label="Password"
             />
@@ -97,20 +86,14 @@ const Login = () => {
           </div>
         </form>
 
-        {message && (
-          <div className="mt-4 p-3 rounded-lg text-center bg-blue-100 text-blue-700">
-            {message}
-          </div>
-        )}
-
         <p className="mt-4 text-center text-sm text-gray-600">
           Don't have an account?{" "}
-          <a
-            href="/register"
+          <Link
+            to={"/register"}
             className="font-medium text-black hover:text-black"
           >
             Sign up here
-          </a>
+          </Link>
         </p>
       </div>
     </div>

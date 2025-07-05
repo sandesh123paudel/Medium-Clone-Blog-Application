@@ -2,20 +2,10 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "../components/ui/Button";
 import InputField from "../components/ui/InputField";
+import DocumentTitle from "../../services/DocumentTitle";
 
 const Register = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [message, setMessage] = useState(""); // Retained for local UI feedback
-
-  const handleRegister = (e) => {
-    e.preventDefault();
-    // Placeholder for registration logic (no Firebase)
-    console.log("Attempting to register with:", { name, email, password });
-    setMessage("Registration attempt: (No backend connected)");
-    // In a real app, you would call an API here
-  };
+  DocumentTitle("Register: Medium");
 
   return (
     <div className="pt-20 flex items-center justify-center px-4 py-12 bg-[#F7F4ED]">
@@ -27,15 +17,13 @@ const Register = () => {
           <p className="mt-2 text-sm text-gray-600">Sign up to get started</p>
         </div>
 
-        <form className="mt-8 space-y-6" onSubmit={handleRegister}>
+        <form className="mt-8 space-y-6">
           <div className="space-y-4">
             <InputField
               id="name"
               name="name"
               type="text"
               placeholder="Full Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
               required
               label="Full Name"
             />
@@ -44,8 +32,6 @@ const Register = () => {
               name="email"
               type="email"
               placeholder="Email address"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
               required
               label="Email address"
             />
@@ -54,8 +40,6 @@ const Register = () => {
               name="password"
               type="password"
               placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
               required
               label="Password"
             />
@@ -84,17 +68,14 @@ const Register = () => {
           </div>
         </form>
 
-        {message && (
-          <div className="mt-4 p-3 rounded-lg text-center bg-blue-100 text-blue-700">
-            {message}
-          </div>
-        )}
-
         <p className="mt-4 text-center text-sm text-gray-600">
           Already have an account?{" "}
-          <a href="/login" className="font-medium text-black hover:text-black">
+          <Link
+            to={"/login"}
+            className="font-medium text-black hover:text-black"
+          >
             Sign in here
-          </a>
+          </Link>
         </p>
       </div>
     </div>

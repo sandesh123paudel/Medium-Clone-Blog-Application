@@ -1,7 +1,9 @@
 // src/pages/Stories.jsx
 import React from "react";
+import DocumentTitle from "../../services/DocumentTitle";
 
 const Stories = () => {
+  DocumentTitle("Stories that Matter: Medium");
   const featuredStories = [
     {
       id: 1,

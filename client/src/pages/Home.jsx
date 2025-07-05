@@ -1,9 +1,11 @@
 import React from "react";
+import DocumentTitle from "../../services/DocumentTitle";
 
 const Home = () => {
+  DocumentTitle("Medium: Read and write stories");
   return (
     <>
-      <section className="flex mt-20 justify-between items-center min-h-[calc(100vh-5rem)] lg:min-h-0">
+      <section className="flex mt-20 justify-between items-center min-h-[calc(100vh-5rem)] lg:min-h-0 ">
         <div className="flex flex-col items-start justify-center ml-4 sm:ml-8 md:ml-16 lg:ml-36 lg:items-start w-full lg:w-auto">
           <p className="text-[60px] sm:text-[80px] md:text-[100px] lg:text-[120px] font-semi-bold font-serif leading-tight">
             Human

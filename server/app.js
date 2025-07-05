@@ -5,19 +5,14 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const authRouter = require("./routes/authRouter");
 
-const app = express();
 
+const app = express();
 //Middleware
 app.use(cors());
 app.use(express.json());
 
-//API Test
-app.get("/", (req, res) => {
-  res.send("API is working");
-});
-
 //Routes
-app.use("/api/auth/", authRouter);
+app.use("/api/auth", authRouter);
 
 mongoose
   .connect(process.env.MONGO_URI)
