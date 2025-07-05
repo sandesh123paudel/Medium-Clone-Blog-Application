@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "../components/ui/Button";
 import InputField from "../components/ui/InputField";
-import DocumentTitle from "../../services/DocumentTitle";
+import DocumentTitle from "../services/DocumentTitle";
 
 const Login = () => {
   DocumentTitle("Login: Medium");
@@ -26,7 +26,6 @@ const Login = () => {
               name="email"
               type="email"
               placeholder="Email address"
-            
               required
               label="Email address"
             />
@@ -35,7 +34,6 @@ const Login = () => {
               name="password"
               type="password"
               placeholder="Password"
-              
               required
               label="Password"
             />

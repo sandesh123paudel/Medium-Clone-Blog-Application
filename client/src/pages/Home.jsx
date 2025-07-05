@@ -1,5 +1,5 @@
 import React from "react";
-import DocumentTitle from "../../services/DocumentTitle";
+import DocumentTitle from "../services/DocumentTitle";
 
 const Home = () => {
   DocumentTitle("Medium: Read and write stories");

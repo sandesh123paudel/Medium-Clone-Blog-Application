@@ -1,6 +1,6 @@
 // src/pages/Membership.jsx
 import React from "react";
-import DocumentTitle from "../../services/DocumentTitle";
+import DocumentTitle from "../services/DocumentTitle";
 
 const Membership = () => {
   DocumentTitle("Membership: Medium");
