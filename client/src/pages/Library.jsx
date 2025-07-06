@@ -3,9 +3,10 @@ import { useAuth } from "../hooks/useAuth";
 import { getUserPosts } from "../services/api/posts";
 import { Link } from "react-router-dom";
 import Loading from "../components/ui/Loading";
-import { toast } from "react-hot-toast";
+import DocumentTitle from "../services/DocumentTitle";
 
 const Library = () => {
+  DocumentTitle("Library");
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -74,7 +75,7 @@ const Library = () => {
         </div>
         <Link
           to="/login"
-          className="mt-4 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
+          className="mt-4 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700"
         >
           Go to Login
         </Link>
@@ -109,7 +110,7 @@ const Library = () => {
         </div>
         <Link
           to="/write"
-          className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
         >
           Write new story
         </Link>

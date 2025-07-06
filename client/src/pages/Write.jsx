@@ -4,6 +4,7 @@ import { createPost } from "../services/api/posts";
 import Button from "../components/ui/Button";
 import InputField from "../components/ui/InputField";
 import { toast } from "react-hot-toast";
+import DocumentTitle from "../services/DocumentTitle";
 
 const CATEGORIES = [
   "Technology",
@@ -20,6 +21,7 @@ const CATEGORIES = [
 ];
 
 const Write = () => {
+  DocumentTitle("Write");
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     title: "",
@@ -89,7 +91,7 @@ const Write = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
+    <div className="max-w-4xl mt-20 pb-20 mx-auto p-6">
       <h1 className="text-3xl font-bold mb-6">Create a New Post</h1>
 
       {error && (

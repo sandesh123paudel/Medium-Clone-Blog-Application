@@ -8,6 +8,9 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import Footer from "./components/Footer";
 import Stories from "./pages/Story";
 import Library from "./pages/Library";
+import NotFound from "./pages/NotFound";
+import PostView from "./pages/PostView";
+import EditPost from "./pages/EditPost";
 import { useAuth } from "./hooks/useAuth";
 
 const App = () => {
@@ -21,7 +24,6 @@ const App = () => {
           path="/stories"
           element={isLoggedIn ? <Stories /> : <Navigate to="/login" />}
         />
-
         <Route
           path="/login"
           element={isLoggedIn ? <Navigate to="/" replace /> : <Login />}
@@ -38,6 +40,13 @@ const App = () => {
           path="/library"
           element={isLoggedIn ? <Library /> : <Navigate to="/login" />}
         />
+        <Route path="/post/:id" element={<PostView />} />
+        <Route
+          path="/edit/:id"
+          element={isLoggedIn ? <EditPost /> : <Navigate to="/login" />}
+        />
+        {/* Catch all route for 404 */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
 
       <Footer />
