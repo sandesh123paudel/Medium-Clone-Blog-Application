@@ -42,8 +42,7 @@ const Header = () => {
 
   // Navigation items for non-logged in users
   const publicNavItems = [
-    { title: "Our Story", url: "/story" },
-    { title: "Membership", url: "/membership" },
+  
     { title: "Write", url: "/write" },
     { title: "Sign in", url: "/login" },
   ];

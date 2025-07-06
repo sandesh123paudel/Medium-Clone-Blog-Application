@@ -4,24 +4,40 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Write from "./pages/Write";
-import Post from "./pages/Post";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import Footer from "./components/Footer";
 import Stories from "./pages/Story";
-import Membership from "./pages/Membership";
+import Library from "./pages/Library";
+import { useAuth } from "./hooks/useAuth";
 
 const App = () => {
+  const { user, isLoggedIn } = useAuth();
   return (
     <>
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/story" element={<Stories />} />
-        <Route path="/membership" element={<Membership />} />
-        <Route path="/post/:id" element={<Post />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/write" element={<Write />} />
+        <Route
+          path="/stories"
+          element={isLoggedIn ? <Stories /> : <Navigate to="/login" />}
+        />
+
+        <Route
+          path="/login"
+          element={isLoggedIn ? <Navigate to="/" replace /> : <Login />}
+        />
+        <Route
+          path="/register"
+          element={isLoggedIn ? <Navigate to="/" replace /> : <Register />}
+        />
+        <Route
+          path="/write"
+          element={isLoggedIn ? <Write /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/library"
+          element={isLoggedIn ? <Library /> : <Navigate to="/login" />}
+        />
       </Routes>
 
       <Footer />

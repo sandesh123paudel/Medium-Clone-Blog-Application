@@ -14,7 +14,9 @@ exports.register = async (req, res) => {
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      res.status(400).json({ message: "User has been already registered" });
+      return res
+        .status(400)
+        .json({ message: "User has been already registered" });
     }
     const hashedPassword = await bcrypt.hash(password, 12);
 
@@ -27,7 +29,7 @@ exports.register = async (req, res) => {
     const token = generateToken(user._id);
     res.status(201).json({
       message: "User Registered",
-      user: { name: user.name, email: user.email },
+      user: { _id: user._id, name: user.name, email: user.email },
       token,
     });
   } catch (error) {
@@ -50,7 +52,7 @@ exports.login = async (req, res) => {
     const token = generateToken(user._id);
     res.status(200).json({
       message: "Login Success",
-      user: { id: user._id, name: user.name, email: user.email },
+      user: { _id: user._id, name: user.name, email: user.email },
       token,
     });
   } catch (error) {

@@ -14,8 +14,13 @@ export const useAuth = () => {
 
       if (userData && token) {
         const parsedUser = JSON.parse(userData);
-        console.log("setting user:", parsedUser);
-        setUser(parsedUser);
+        // Ensure we have _id for consistency
+        const normalizedUser = {
+          ...parsedUser,
+          _id: parsedUser._id || parsedUser.id, // Use _id if exists, otherwise use id
+        };
+        console.log("setting normalized user:", normalizedUser);
+        setUser(normalizedUser);
         setIsLoggedIn(true);
       } else {
         setUser(null);
@@ -55,9 +60,14 @@ export const useAuth = () => {
 
   // Manual login function (if needed)
   const login = (userData, token) => {
-    localStorage.setItem("user", JSON.stringify(userData));
+    // Ensure we store user data with _id
+    const normalizedUserData = {
+      ...userData,
+      _id: userData._id || userData.id, // Use _id if exists, otherwise use id
+    };
+    localStorage.setItem("user", JSON.stringify(normalizedUserData));
     localStorage.setItem("token", token);
-    setUser(userData);
+    setUser(normalizedUserData);
     setIsLoggedIn(true);
     // Dispatch event for other tabs
     window.dispatchEvent(new StorageEvent("storage", { key: "user" }));
