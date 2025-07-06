@@ -15,6 +15,15 @@ import { useAuth } from "./hooks/useAuth";
 
 const App = () => {
   const { user, isLoggedIn } = useAuth();
+
+  // Protected route wrapper
+  const ProtectedRoute = ({ children }) => {
+    if (!isLoggedIn) {
+      return <Navigate to="/login" />;
+    }
+    return children;
+  };
+
   return (
     <>
       <Header />
@@ -22,7 +31,11 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route
           path="/stories"
-          element={isLoggedIn ? <Stories /> : <Navigate to="/login" />}
+          element={
+            <ProtectedRoute>
+              <Stories />
+            </ProtectedRoute>
+          }
         />
         <Route
           path="/login"
@@ -34,16 +47,28 @@ const App = () => {
         />
         <Route
           path="/write"
-          element={isLoggedIn ? <Write /> : <Navigate to="/login" />}
+          element={
+            <ProtectedRoute>
+              <Write />
+            </ProtectedRoute>
+          }
         />
         <Route
           path="/library"
-          element={isLoggedIn ? <Library /> : <Navigate to="/login" />}
+          element={
+            <ProtectedRoute>
+              <Library />
+            </ProtectedRoute>
+          }
         />
         <Route path="/post/:id" element={<PostView />} />
         <Route
           path="/edit/:id"
-          element={isLoggedIn ? <EditPost /> : <Navigate to="/login" />}
+          element={
+            <ProtectedRoute>
+              <EditPost />
+            </ProtectedRoute>
+          }
         />
         {/* Catch all route for 404 */}
         <Route path="*" element={<NotFound />} />

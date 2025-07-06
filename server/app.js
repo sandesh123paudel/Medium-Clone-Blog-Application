@@ -4,6 +4,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const path = require("path");
+const multer = require("multer");
 const authRouter = require("./routes/authRouter");
 const postRouter = require("./routes/postRouter");
 
@@ -22,25 +23,22 @@ app.use("/api/auth", authRouter);
 app.use("/api/posts", postRouter);
 
 // Error handling middleware for multer
-app.use((error, req, res, next) => {
-  if (error.code === "LIMIT_FILE_SIZE") {
+app.use((err, req, res, next) => {
+  if (err instanceof multer.MulterError) {
     return res.status(400).json({
-      success: false,
-      message: "File size too large. Maximum size is 5MB",
+      message: "File upload error",
+      error: err.message,
     });
   }
+  next(err);
+});
 
-  if (error.message === "Only image files are allowed!") {
-    return res.status(400).json({
-      success: false,
-      message: "Only image files are allowed",
-    });
-  }
-
+// Generic error handler
+app.use((err, req, res, next) => {
+  console.error(err.stack);
   res.status(500).json({
-    success: false,
-    message: "Something went wrong",
-    error: error.message,
+    message: "Something went wrong!",
+    error: err.message,
   });
 });
 
@@ -57,3 +55,5 @@ mongoose
   .catch((err) => {
     console.log("Mongo DB Error:", err);
   });
+
+module.exports = app;

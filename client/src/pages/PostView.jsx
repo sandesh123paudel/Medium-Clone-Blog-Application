@@ -95,7 +95,7 @@ const PostView = () => {
   const isAuthor = user && post.userId._id === user._id;
 
   return (
-    <article className="max-w-4xl mt-20 mx-auto px-4 pb-20">
+    <article className="max-w-4xl mt-24 mx-auto px-4 pb-20">
       {/* Header Section */}
       <header className="mb-8">
         <div className="flex items-center gap-4 mb-4">

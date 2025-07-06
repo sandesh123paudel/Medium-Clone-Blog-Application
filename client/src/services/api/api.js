@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://localhost:5000/api";
+const BASE_URL = "http://localhost:5000/api";
 
 // Function to get stored token
 export const getAuthToken = () => {
@@ -16,20 +16,19 @@ export const setAuthToken = (token) => {
 
 // Generic fetch wrapper
 export const apiCall = async (endpoint, options = {}) => {
-  const url = `${API_BASE_URL}${endpoint}`;
-  const token = getAuthToken();
-
-  const config = {
-    headers: {
+  try {
+    const token = getAuthToken();
+    const headers = {
       "Content-Type": "application/json",
       ...(token && { Authorization: `Bearer ${token}` }),
       ...options.headers,
-    },
-    ...options,
-  };
+    };
 
-  try {
-    const response = await fetch(url, config);
+    const response = await fetch(`${BASE_URL}${endpoint}`, {
+      ...options,
+      headers,
+    });
+
     const data = await response.json();
 
     if (!response.ok) {
@@ -38,6 +37,7 @@ export const apiCall = async (endpoint, options = {}) => {
 
     return data;
   } catch (error) {
-    throw new Error(error.message || "Network error");
+    console.error("API Error:", error);
+    throw error;
   }
 };

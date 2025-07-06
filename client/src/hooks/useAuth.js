@@ -4,13 +4,12 @@ import { getAuthToken } from "../services/api/api";
 export const useAuth = () => {
   const [user, setUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const checkAuth = useCallback(() => {
-    console.log("checkAuth called");
     try {
       const userData = localStorage.getItem("user");
       const token = getAuthToken();
-      console.log("userData from storage:", userData);
 
       if (userData && token) {
         const parsedUser = JSON.parse(userData);
@@ -19,7 +18,6 @@ export const useAuth = () => {
           ...parsedUser,
           _id: parsedUser._id || parsedUser.id, // Use _id if exists, otherwise use id
         };
-        console.log("setting normalized user:", normalizedUser);
         setUser(normalizedUser);
         setIsLoggedIn(true);
       } else {
@@ -27,14 +25,15 @@ export const useAuth = () => {
         setIsLoggedIn(false);
       }
     } catch (error) {
-      console.error("Error parsing user data:", error);
+      console.error("Error checking auth:", error);
       setUser(null);
       setIsLoggedIn(false);
+    } finally {
+      setIsLoading(false);
     }
   }, []);
 
   useEffect(() => {
-    console.log("useEffect running");
     checkAuth();
 
     // Listen for custom auth changes (same tab)
@@ -58,7 +57,7 @@ export const useAuth = () => {
     };
   }, [checkAuth]);
 
-  // Manual login function (if needed)
+  // Manual login function
   const login = (userData, token) => {
     // Ensure we store user data with _id
     const normalizedUserData = {
@@ -83,5 +82,5 @@ export const useAuth = () => {
     window.dispatchEvent(new StorageEvent("storage", { key: "user" }));
   };
 
-  return { user, isLoggedIn, checkAuth, login, logout };
+  return { user, isLoggedIn, isLoading, checkAuth, login, logout };
 };

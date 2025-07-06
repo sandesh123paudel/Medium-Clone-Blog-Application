@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "../hooks/useAuth";
 import { getUserPosts } from "../services/api/posts";
 import { Link } from "react-router-dom";
-import Loading from "../components/ui/Loading";
 import DocumentTitle from "../services/DocumentTitle";
 
 const Library = () => {
@@ -25,30 +24,11 @@ const Library = () => {
       }
 
       try {
-        console.log("Library - Current auth state:", {
-          isLoggedIn,
-          userId: user._id,
-          userObj: user,
-        });
-
         // Log the actual localStorage contents
         const storedUser = localStorage.getItem("user");
         const storedToken = localStorage.getItem("token");
-        console.log("Library - Local storage:", {
-          user: storedUser ? JSON.parse(storedUser) : null,
-          hasToken: !!storedToken,
-        });
 
         const userPosts = await getUserPosts(user._id);
-        console.log(
-          "Library - Fetched posts:",
-          userPosts.map((post) => ({
-            id: post._id,
-            title: post.title,
-            userId: post.userId._id,
-            userMatch: post.userId._id === user._id,
-          }))
-        );
 
         setPosts(userPosts);
       } catch (err) {
@@ -62,10 +42,6 @@ const Library = () => {
 
     loadPosts();
   }, [isLoggedIn, user?._id]); // Depend on both isLoggedIn and user ID
-
-  if (loading) {
-    return <Loading />;
-  }
 
   if (!isLoggedIn) {
     return (
